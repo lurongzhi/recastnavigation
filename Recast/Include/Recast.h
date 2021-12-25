@@ -22,6 +22,14 @@
 /// The value of PI used by Recast.
 static const float RC_PI = 3.14159265f;
 
+/// Extended Off Mesh Link Type
+enum offMeshLinkType
+{
+	OFF_MESH_LINK_NORMAL,
+	OFF_MESH_LINK_JUMP,
+	OFF_MESH_LINK_CLIMB,
+};
+
 /// Recast log categories.
 /// @see rcContext
 enum rcLogCategory

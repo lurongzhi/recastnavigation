@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <float.h>
+#include <iostream>
 #include "SDL.h"
 #include "SDL_opengl.h"
 #ifdef __APPLE__
@@ -35,6 +36,7 @@
 #include "Recast.h"
 #include "RecastDebugDraw.h"
 #include "DetourDebugDraw.h"
+
 
 #ifdef WIN32
 #	define snprintf _snprintf
@@ -77,6 +79,14 @@ void OffMeshConnectionTool::handleMenu()
 		m_bidir = false;
 	if (imguiCheck("Bidirectional", m_bidir))
 		m_bidir = true;
+	imguiLabel("Link Type");
+	imguiIndent();
+	for (auto iter = OffMeshLinkFlags.begin(); iter != OffMeshLinkFlags.end(); iter++)
+	{
+		if (imguiCheck(iter->first.c_str(), m_linkType == iter->second))
+			m_linkType = iter->second;
+	}
+	imguiUnindent();
 }
 
 void OffMeshConnectionTool::handleClick(const float* /*s*/, const float* p, bool shift)

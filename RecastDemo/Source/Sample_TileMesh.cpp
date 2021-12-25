@@ -285,6 +285,11 @@ void Sample_TileMesh::handleSettings()
 		m_navQuery->init(m_navMesh, 2048);
 	}
 
+	if (imguiButton("Save Off Mesh Link"))
+	{
+		Sample::saveOffMeshLink();
+	}
+
 	imguiUnindent();
 	imguiUnindent();
 	

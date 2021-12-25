@@ -134,6 +134,8 @@ protected:
 	
 	dtNavMesh* loadAll(const char* path);
 	void saveAll(const char* path, const dtNavMesh* mesh);
+	void saveOffMeshLink();
+	void loadOffMeshLink();
 
 public:
 	Sample();

@@ -19,6 +19,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
+#include <fstream.h>
 #include "Sample.h"
 #include "InputGeom.h"
 #include "Recast.h"
@@ -446,4 +447,91 @@ void Sample::saveAll(const char* path, const dtNavMesh* mesh)
 	}
 
 	fclose(fp);
+}
+
+void Sample::saveOffMeshLink()
+{
+	fs::path pGeomFullPath(m_geom->m_filePath);
+	fs::path pGeomName = pGeomFullPath.stem();
+	05
+		fs::path pGeomPath = pGeomFullPath.parent_path();
+	06
+		fs::path pNaviMapPath = m_isBuildAsseblableTile ? pGeomPath / pGeomName : pGeomPath;
+	07
+		fs::path pNaviMapExt(".navlink");
+	08
+		fs::path pNaviMapFullPath = (pNaviMapPath / pGeomName);
+	09
+		pNaviMapFullPath += pNaviMapExt;
+	10
+
+		11
+		auto offMeshConVerts = m_geom->getOffMeshConnectionVerts();
+	12
+		auto offMeshConRad = m_geom->getOffMeshConnectionRads();
+	13
+		auto offMeshConDir = m_geom->getOffMeshConnectionDirs();
+	14
+		auto offMeshConAreas = m_geom->getOffMeshConnectionAreas();
+	15
+		auto offMeshConFlags = m_geom->getOffMeshConnectionFlags();
+	16
+		auto offMeshConUserID = m_geom->getOffMeshConnectionId();
+	17
+		auto offMeshConCount = m_geom->getOffMeshConnectionCount();
+	18
+		if (offMeshConCount <= 0)
+			19
+			return;
+	20
+		fs::fstream fout(pNaviMapFullPath.string(), std::ios_base::out);
+	21
+		for (int i = 0; i < offMeshConCount; ++i)
+			22
+		{
+			23
+				const float* pos = &offMeshConVerts[i * 3 * 2];
+			24
+				const unsigned char dir = offMeshConDir[i];
+			25
+				const int int_dir = int(dir);
+			26
+				const float rad = offMeshConRad[i];
+			27
+				const int area = int(offMeshConAreas[i]);
+			28
+				const int flag = int(offMeshConFlags[i]);
+			29
+				const int userId = offMeshConUserID[i];
+			30
+				fout << boost::lexical_cast<std::string>(pos[0]) << ","
+				31
+				<< boost::lexical_cast<std::string>(pos[1]) << ","
+				32
+				<< boost::lexical_cast<std::string>(pos[2]) << ","
+				33
+				<< boost::lexical_cast<std::string>(pos[3]) << ","
+				34
+				<< boost::lexical_cast<std::string>(pos[4]) << ","
+				35
+				<< boost::lexical_cast<std::string>(pos[5]) << ","
+				36
+				<< boost::lexical_cast<std::string>(rad) << ","
+				37
+				<< boost::lexical_cast<std::string>(int_dir) << ","
+				38
+				<< boost::lexical_cast<std::string>(area) << ","
+				39
+				<< boost::lexical_cast<std::string>(flag) << ","
+				40
+				<< boost::lexical_cast<std::string>(userId) << std::endl;
+			41
+		}
+	42
+		fout.close();
+
+}
+
+void Sample::loadOffMeshLink()
+{
 }

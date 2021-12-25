@@ -20,6 +20,15 @@
 #define OFFMESHCONNECTIONTOOL_H
 
 #include "Sample.h"
+#include "Recast.h"
+#include <vector>
+#include <tuple>
+
+static std::vector<std::pair<std::string, offMeshLinkType>> OffMeshLinkFlags = {
+	 {"Normal", OFF_MESH_LINK_NORMAL},
+	 {"Climb", OFF_MESH_LINK_CLIMB},
+	 {"Jump", OFF_MESH_LINK_JUMP},
+};
 
 // Tool to create off-mesh connection for InputGeom
 
@@ -29,7 +38,9 @@ class OffMeshConnectionTool : public SampleTool
 	float m_hitPos[3];
 	bool m_hitPosSet;
 	bool m_bidir;
+	int m_linkType = 0;
 	unsigned char m_oldFlags;
+
 	
 public:
 	OffMeshConnectionTool();
