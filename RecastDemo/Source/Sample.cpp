@@ -19,7 +19,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
-#include <fstream.h>
+#include <fstream>
 #include "Sample.h"
 #include "InputGeom.h"
 #include "Recast.h"
@@ -451,7 +451,53 @@ void Sample::saveAll(const char* path, const dtNavMesh* mesh)
 
 void Sample::saveOffMeshLink()
 {
-	fs::path pGeomFullPath(m_geom->m_filePath);
+	std::ofstream fout("test.link");
+	auto offMeshConVerts = m_geom->getOffMeshConnectionVerts();
+	auto offMeshConRad = m_geom->getOffMeshConnectionRads();
+	auto offMeshConDir = m_geom->getOffMeshConnectionDirs();
+	auto offMeshConAreas = m_geom->getOffMeshConnectionAreas();
+	auto offMeshConFlags = m_geom->getOffMeshConnectionFlags();
+	auto offMeshConUserID = m_geom->getOffMeshConnectionId();
+	auto offMeshConCount = m_geom->getOffMeshConnectionCount();
+	if (offMeshConCount <= 0)
+		return;
+
+	for (int i = 0; i < offMeshConCount; ++i)
+	{
+		const float* pos = &offMeshConVerts[i * 3 * 2];	
+		const unsigned char dir = offMeshConDir[i];
+		const int int_dir = int(dir);
+		const float rad = offMeshConRad[i];
+		const int area = int(offMeshConAreas[i]);
+		const int flag = int(offMeshConFlags[i]);
+		const int userId = offMeshConUserID[i];
+		fout << pos[0] << "," << pos[1] << "," << pos[2] << "," << pos[3] << "," << pos[4] << "," << pos[5] << "," << pos[6] << " ";
+		fout << rad << "," << area << "," << flag << "," << userId << std::endl;
+		//	fout << boost::lexical_cast<std::string>(pos[0]) << ","
+		//	31
+		//	<< boost::lexical_cast<std::string>(pos[1]) << ","
+		//	32
+		//	<< boost::lexical_cast<std::string>(pos[2]) << ","
+		//	33
+		//	<< boost::lexical_cast<std::string>(pos[3]) << ","
+		//	34
+		//	<< boost::lexical_cast<std::string>(pos[4]) << ","
+		//	35
+		//	<< boost::lexical_cast<std::string>(pos[5]) << ","
+		//	36
+		//	<< boost::lexical_cast<std::string>(rad) << ","
+		//	37
+		//	<< boost::lexical_cast<std::string>(int_dir) << ","
+		//	38
+		//	<< boost::lexical_cast<std::string>(area) << ","
+		//	39
+		//	<< boost::lexical_cast<std::string>(flag) << ","
+		//	40
+		//	<< boost::lexical_cast<std::string>(userId) << std::endl;
+		//41
+	}
+	fout.close();
+	/*fs::path pGeomFullPath(m_geom->m_filePath);
 	fs::path pGeomName = pGeomFullPath.stem();
 	05
 		fs::path pGeomPath = pGeomFullPath.parent_path();
@@ -528,7 +574,7 @@ void Sample::saveOffMeshLink()
 			41
 		}
 	42
-		fout.close();
+		fout.close();*/
 
 }
 
