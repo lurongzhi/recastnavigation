@@ -1163,7 +1163,18 @@ void dtCrowd::update(const float dt, dtCrowdAgentDebugInfo* debug)
 				anim->active = true;
 				anim->t = 0.0f;
 				anim->tmax = (dtVdist2D(anim->startPos, anim->endPos) / ag->params.maxSpeed) * 0.5f;
-				
+
+				const dtMeshTile* tile = 0;
+				const dtPoly* poly = 0;
+				if (dtStatusFailed(m_navquery->getAttachedNavMesh()->getTileAndPolyByRef(anim->polyRef, &tile, &poly)))
+				{
+					anim->areaAndtype = 0;
+				}
+				else
+				{
+					anim->areaAndtype = poly->getArea();
+				}
+
 				ag->state = DT_CROWDAGENT_STATE_OFFMESH;
 				ag->ncorners = 0;
 				ag->nneis = 0;

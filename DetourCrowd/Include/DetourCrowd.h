@@ -174,6 +174,7 @@ struct dtCrowdAgent
 struct dtCrowdAgentAnimation
 {
 	bool active;
+	unsigned char areaAndtype;
 	float initPos[3], startPos[3], endPos[3];
 	dtPolyRef polyRef;
 	float t, tmax;
