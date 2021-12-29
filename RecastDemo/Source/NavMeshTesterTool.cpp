@@ -460,6 +460,16 @@ void NavMeshTesterTool::handleMenu()
 		m_filter.setExcludeFlags(m_filter.getExcludeFlags() ^ SAMPLE_POLYFLAGS_JUMP);
 		recalc();
 	}
+	if (imguiCheck("Disable", (m_filter.getExcludeFlags() & SAMPLE_POLYFLAGS_DISABLED) != 0))
+	{
+		m_filter.setExcludeFlags(m_filter.getExcludeFlags() ^ SAMPLE_POLYFLAGS_DISABLED);
+		recalc();
+	}
+	if (imguiCheck("All", (m_filter.getExcludeFlags() & SAMPLE_POLYFLAGS_ALL) == SAMPLE_POLYFLAGS_ALL))
+	{
+		m_filter.setExcludeFlags(m_filter.getExcludeFlags() ^ SAMPLE_POLYFLAGS_ALL);
+		recalc();
+	}
 	imguiUnindent();
 
 	imguiSeparator();	

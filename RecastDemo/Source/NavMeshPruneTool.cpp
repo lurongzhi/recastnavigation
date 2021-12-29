@@ -137,7 +137,7 @@ static void floodNavmesh(dtNavMesh* nav, NavmeshFlags* flags, dtPolyRef start, u
 		return;
 
 	flags->setFlags(start, flag);
-		
+	return; 
 	std::vector<dtPolyRef> openList;
 	openList.push_back(start);
 

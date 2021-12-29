@@ -42,12 +42,14 @@ enum SampleToolType
 /// The use should specify these base on his needs.
 enum SamplePolyAreas
 {
+	SAMPLE_POLYAREA_NULL_AREA = 0x00,
 	SAMPLE_POLYAREA_GROUND,
 	SAMPLE_POLYAREA_WATER,
 	SAMPLE_POLYAREA_ROAD,
 	SAMPLE_POLYAREA_DOOR,
 	SAMPLE_POLYAREA_GRASS,
 	SAMPLE_POLYAREA_JUMP = 0x08,
+	SAMPLE_POLYAREA_DISABLED = 0x10,		// Disabled polygon
 };
 enum SamplePolyFlags
 {
